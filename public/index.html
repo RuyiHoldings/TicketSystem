@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruyi Holdings | Support Portal</title>
+    <style>
+      :root {
+        --ruyi-green: #1e5d3b;
+        --ruyi-green-deep: #143e29;
+        --ruyi-gold: #d7b76c;
+        --ruyi-gold-soft: #f2e7bf;
+        --ruyi-cream: #f7f2e9;
+        --ruyi-ink: #1f2a37;
+        --ruyi-muted: #5f6f7c;
+        --panel: #ffffff;
+        --line: #e9e2d6;
+        --shadow: 0 18px 40px rgba(18, 45, 33, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(180deg, #f7f6f2 0%, #f2efe9 100%);
+        color: var(--ruyi-ink);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 22px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(30, 93, 59, 0.12);
+      }
+
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 82px;
+        gap: 18px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--ruyi-green-deep);
+      }
+
+      .brand-logo {
+        width: 42px;
+        height: 42px;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 4px 10px rgba(25, 80, 50, 0.18));
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--ruyi-green) 0%, #2f7f5c 100%);
+        position: relative;
+        box-shadow: inset 0 0 0 3px rgba(255,255,255,0.35);
+        display: none;
+      }
+
+      .brand-mark::before {
+        content: "R";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 800;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        color: var(--ruyi-ink);
+        font-size: 0.96rem;
+      }
+
+      .nav a {
+        color: rgba(20, 36, 30, 0.8);
+        transition: color 0.2s ease;
+      }
+
+      .nav a:hover {
+        color: var(--ruyi-green);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .support-strip {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .support-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 14px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        border: 1px solid rgba(255,255,255,0.24);
+        background: rgba(255,255,255,0.07);
+        color: white;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 12px 18px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--ruyi-green) 0%, #2b6b47 100%);
+        color: white;
+        box-shadow: 0 12px 24px rgba(30, 93, 59, 0.18);
+      }
+
+      .btn-outline {
+        background: rgba(30, 93, 59, 0.08);
+        color: var(--ruyi-green-deep);
+      }
+
+      .hero {
+        background: linear-gradient(135deg, rgba(18, 53, 37, 0.96), rgba(28, 76, 57, 0.88));
+        color: white;
+        overflow: hidden;
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 30px;
+        align-items: center;
+        min-height: 620px;
+        padding: 44px 0 56px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        background: rgba(255,255,255,0.09);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #e7f3ec;
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 22px 0 16px;
+        font-size: clamp(2.5rem, 4vw, 4.5rem);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+      }
+
+      .hero-copy p {
+        max-width: 620px;
+        font-size: 1.13rem;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.8);
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 26px;
+        flex-wrap: wrap;
+      }
+
+      .hero-card {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 28px;
+        padding: 26px;
+        backdrop-filter: blur(8px);
+        box-shadow: var(--shadow);
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .metric {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 18px;
+        padding: 18px 16px;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 1.7rem;
+        margin-bottom: 6px;
+      }
+
+      .metric span {
+        color: rgba(255,255,255,0.72);
+        font-size: 0.9rem;
+      }
+
+      .section {
+        padding: 76px 0;
+      }
+
+      .section-header {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 34px;
+      }
+
+      .section-header h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 3vw, 3rem);
+        letter-spacing: -0.04em;
+        color: var(--ruyi-green-deep);
+      }
+
+      .section-header p {
+        margin: 0;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--ruyi-muted);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 26px 22px;
+        box-shadow: 0 12px 24px rgba(18, 45, 33, 0.04);
+      }
+
+      .feature-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--ruyi-gold-soft), #fff2cf);
+        display: grid;
+        place-items: center;
+        font-size: 1.5rem;
+        margin-bottom: 18px;
+      }
+
+      .feature-card h3 {
+        margin: 0 0 10px;
+        color: var(--ruyi-green-deep);
+        font-size: 1.35rem;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--ruyi-muted);
+        line-height: 1.7;
+      }
+
+      .support-shell {
+        background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(247,242,233,0.9));
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        box-shadow: var(--shadow);
+        padding: 30px;
+      }
+
+      .support-layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 26px;
+      }
+
+      .support-form {
+        background: linear-gradient(180deg, #fdeec4 0%, #f9f1d7 100%);
+        border: 1px solid rgba(215, 183, 108, 0.5);
+        border-radius: 24px;
+        padding: 24px;
+      }
+
+      .support-form h3,
+      .ticket-panel h3 {
+        margin: 0 0 20px;
+        color: var(--ruyi-green-deep);
+        font-size: 1.6rem;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--ruyi-green-deep);
+      }
+
+      input, textarea, select {
+        width: 100%;
+        padding: 12px 13px;
+        border: 1px solid rgba(30, 93, 59, 0.18);
+        border-radius: 12px;
+        background: white;
+        color: var(--ruyi-ink);
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .ticket-panel {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 22px;
+      }
+
+      .filters {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+
+      .filter-field {
+        flex: 1;
+        min-width: 160px;
+      }
+
+      .ticket-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .ticket-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px;
+        background: #fbfaf8;
+      }
+
+      .ticket-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .ticket-title {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+        color: var(--ruyi-green-deep);
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .open { background: #dff7e8; color: var(--ruyi-green); }
+      .in_progress { background: #fff1d3; color: #8e5d09; }
+      .resolved { background: #e1f8ea; color: #1d7d4c; }
+      .closed { background: #edf1f4; color: #3f4b5d; }
+
+      .low { background: #e9f7d8; color: #3b6d1f; }
+      .medium { background: #fff1d3; color: #8e5d09; }
+      .high { background: #ffe1d9; color: #a33a25; }
+
+      .ticket-card p {
+        margin: 0;
+        color: var(--ruyi-muted);
+        line-height: 1.7;
+      }
+
+      .ticket-meta {
+        margin-top: 12px;
+        color: var(--ruyi-muted);
+        font-size: 0.9rem;
+        line-height: 1.8;
+      }
+
+      .ticket-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .secondary {
+        background: rgba(30, 93, 59, 0.08);
+        color: var(--ruyi-green-deep);
+      }
+
+      .danger {
+        background: #fde6e6;
+        color: #b42318;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 980px) {
+        .hero-inner,
+        .support-layout,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav {
+          display: none;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .row,
+        .metric-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar-inner {
+          padding: 8px 0;
+        }
+
+        .support-shell {
+          padding: 20px 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand" aria-label="Ruyi Holdings logo and wordmark">
+          <img class="brand-logo" src="http://ruyiholdings.com/wp-content/themes/ruyi/images/ruyi-logo.png" alt="Ruyi Holdings logo" />
+          <span>RUYI HOLDINGS</span>
+        </div>
+
+        <nav class="nav" aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#products">Products</a>
+          <a href="#support">Support</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a class="btn btn-outline" href="mailto:support@ruyiholdings.com">Email Support</a>
+          <a class="btn btn-primary" href="https://wa.me/?text=Hello%20Ruyi%20Holdings%20Support%2C%20I%20need%20help." target="_blank" rel="noreferrer">WhatsApp Support</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <span class="eyebrow">Therapeutic Cellular Wellness</span>
+            <h1>Beauty, vitality, and longevity with science-led care.</h1>
+            <p>
+              A leader in therapeutic cellular therapies for anti-ageing, beauty and optimum health —
+              bringing together premium innovation, trusted wellness support, and expert guidance for every stage of life.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="button" data-scroll-target="#products">Explore Products</button>
+              <button class="btn btn-outline" type="button" data-scroll-target="#support" style="background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.18);">Book Consultation</button>
+            </div>
+
+            <div class="support-strip" aria-label="Support channels">
+              <a class="support-link" href="https://wa.me/?text=Hello%20Ruyi%20Holdings%20Support%2C%20I%20need%20help." target="_blank" rel="noreferrer">WhatsApp Support</a>
+              <a class="support-link" href="mailto:support@ruyiholdings.com">support@ruyiholdings.com</a>
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="Brand highlights">
+            <div style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.72);">Why Ruyi</div>
+            <div class="metric-grid">
+              <div class="metric">
+                <strong>20+</strong>
+                <span>Wellness brands</span>
+              </div>
+              <div class="metric">
+                <strong>100%</strong>
+                <span>Science-backed focus</span>
+              </div>
+              <div class="metric">
+                <strong>24/7</strong>
+                <span>Client support</span>
+              </div>
+              <div class="metric">
+                <strong>3x</strong>
+                <span>Customer growth</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container">
+          <div class="section-header">
+            <h2>Wellness innovation rooted in cellular health</h2>
+            <p>
+              We combine advanced therapeutic approaches, premium formulations, and client-first care to support beauty,
+              anti-ageing, and total health from the inside out.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">✦</div>
+              <h3>Cellular therapies</h3>
+              <p>Targeted formulations that elevate vitality, improve skin wellness, and support long-term wellbeing.</p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">◎</div>
+              <h3>Beauty & anti-ageing</h3>
+              <p>Care-driven solutions designed to nurture radiance, resilience, and confidence in everyday life.</p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">✓</div>
+              <h3>Trusted support</h3>
+              <p>Transparent guidance and responsive service that help clients make informed choices with confidence.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="products">
+        <div class="container">
+          <div class="section-header">
+            <h2>Premium product categories</h2>
+            <p>Our portfolio brings together therapeutic innovation, beauty essentials, and wellness experiences designed for modern lifestyles.</p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">❋</div>
+              <h3>ZELL-V Cellular Therapy</h3>
+              <p>Advanced cell-support solutions crafted for vitality, radiance, and healthy longevity.</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">✧</div>
+              <h3>ZELL-V Platinum Plus</h3>
+              <p>Luxury wellness support for rejuvenation, vitality, and everyday confidence.</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">▣</div>
+              <h3>Beauty & wellness support</h3>
+              <p>Guided everyday essentials that help clients maintain a more balanced, healthy lifestyle.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="support">
+        <div class="container">
+          <div class="support-shell">
+            <div class="support-layout">
+              <aside class="support-form">
+                <h3>Create support ticket</h3>
+                <form id="ticketForm">
+                  <label>
+                    Title
+                    <input id="title" name="title" required maxlength="160" placeholder="Product support request" />
+                  </label>
+
+                  <label>
+                    Description
+                    <textarea id="description" name="description" required placeholder="Tell us how we can help..."></textarea>
+                  </label>
+
+                  <div class="row">
+                    <label>
+                      Status
+                      <select id="status" name="status">
+                        <option value="open">Open</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="closed">Closed</option>
+                      </select>
+                    </label>
+
+                    <label>
+                      Priority
+                      <select id="priority" name="priority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  <label>
+                    Customer name
+                    <input id="customerName" name="customerName" placeholder="Customer or account name" />
+                  </label>
+
+                  <label>
+                    Category
+                    <input id="category" name="category" placeholder="Example: Product Support" />
+                  </label>
+
+                  <label>
+                    Person in charge / assignee
+                    <input id="assignee" name="assignee" placeholder="e.g. Sarah Lee or support lead" />
+                  </label>
+
+                  <button class="btn btn-primary" type="submit">Submit Ticket</button>
+                </form>
+              </aside>
+
+              <section class="ticket-panel" aria-live="polite">
+                <h3>Client support center</h3>
+
+                <div class="filters">
+                  <div class="filter-field">
+                    <label class="sr-only" for="filterStatus">Filter by status</label>
+                    <select id="filterStatus">
+                      <option value="">All statuses</option>
+                      <option value="open">Open</option>
+                      <option value="in_progress">In Progress</option>
+                      <option value="resolved">Resolved</option>
+                      <option value="closed">Closed</option>
+                    </select>
+                  </div>
+
+                  <div class="filter-field">
+                    <label class="sr-only" for="filterPriority">Filter by priority</label>
+                    <select id="filterPriority">
+                      <option value="">All priorities</option>
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+
+                  <button id="refreshBtn" class="btn secondary" type="button">Refresh</button>
+                </div>
+
+                <div id="ticketList" class="ticket-list"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="section-header">
+            <h2>Contact the team</h2>
+            <p>For product questions, distribution partnerships, or support requests, our team is ready to help.</p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">✆</div>
+              <h3>WhatsApp support</h3>
+              <p><a href="https://wa.me/?text=Hello%20Ruyi%20Holdings%20Support%2C%20I%20need%20help." target="_blank" rel="noreferrer">Chat with support</a><br />Fast assistance for product and order support</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">⌂</div>
+              <h3>Email support</h3>
+              <p><a href="mailto:support@ruyiholdings.com">support@ruyiholdings.com</a><br />Response time: within one business day</p>
+            </article>
+            <article class="feature-card">
+              <div class="feature-icon" aria-hidden="true">⟡</div>
+              <h3>Business</h3>
+              <p>Partnership and distributor inquiries<br />Dedicated to beauty, longevity, and wellness care</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const ticketList = document.getElementById('ticketList');
+      const ticketForm = document.getElementById('ticketForm');
+      const filterStatus = document.getElementById('filterStatus');
+      const filterPriority = document.getElementById('filterPriority');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const whatsappNumber = '60123456789';
+
+      function buildTicketWhatsAppLink(ticket) {
+        const message = [
+          'Hello, new support case assigned.',
+          `Ticket ID: #${ticket.id}`,
+          `Customer: ${ticket.customerName || 'Unassigned'}`,
+          `Category: ${ticket.category || 'General'}`,
+          `Title: ${ticket.title || 'Support request'}`,
+          `Priority: ${ticket.priority || 'medium'}`,
+          `Assignee: ${ticket.assignee || 'Unassigned'}`,
+          `Description: ${ticket.description || 'No description provided.'}`
+        ].join('\n');
+        return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      }
+
+      function statusClass(status) {
+        return status || 'open';
+      }
+
+      function priorityClass(priority) {
+        return priority || 'medium';
+      }
+
+      function formatDate(value) {
+        if (!value) return 'n/a';
+        return new Date(value).toLocaleString();
+      }
+
+      async function loadTickets() {
+        const query = new URLSearchParams();
+
+        if (filterStatus.value) query.set('status', filterStatus.value);
+        if (filterPriority.value) query.set('priority', filterPriority.value);
+
+        const response = await fetch(`/api/tickets?${query.toString()}`);
+        const payload = await response.json();
+        const tickets = payload.tickets || [];
+
+        ticketList.innerHTML = '';
+
+        if (!tickets.length) {
+          ticketList.innerHTML = '<div class="ticket-card"><p>No tickets match the current filters.</p></div>';
+          return;
+        }
+
+        tickets.forEach((ticket) => {
+          const card = document.createElement('article');
+          card.className = 'ticket-card';
+          const whatsappLink = buildTicketWhatsAppLink(ticket);
+          card.innerHTML = `
+            <div class="ticket-header">
+              <h4 class="ticket-title">#${ticket.id} - ${ticket.title}</h4>
+              <button class="btn danger" data-delete-id="${ticket.id}" type="button">Delete</button>
+            </div>
+            <div class="badge-row">
+              <span class="badge ${statusClass(ticket.status)}">${(ticket.status || 'open').replace('_', ' ')}</span>
+              <span class="badge ${priorityClass(ticket.priority)}">${ticket.priority || 'medium'}</span>
+            </div>
+            <p>${ticket.description || 'No description provided.'}</p>
+            <div class="ticket-meta">
+              Customer: ${ticket.customerName || 'Unassigned'}<br />
+              Category: ${ticket.category || 'General'}<br />
+              Person in charge: ${ticket.assignee || 'Unassigned'}<br />
+              Created: ${formatDate(ticket.createdAt)}<br />
+              Updated: ${formatDate(ticket.updatedAt)}
+            </div>
+            <div class="ticket-actions">
+              <a class="btn secondary" href="${whatsappLink}" target="_blank" rel="noreferrer">Notify PIC</a>
+              <button class="btn secondary" data-status-action="${ticket.id}" data-status="in_progress" type="button">Start</button>
+              <button class="btn secondary" data-status-action="${ticket.id}" data-status="resolved" type="button">Resolve</button>
+              <button class="btn secondary" data-status-action="${ticket.id}" data-status="closed" type="button">Close</button>
+            </div>
+          `;
+          ticketList.appendChild(card);
+        });
+      }
+
+      document.querySelectorAll('[data-scroll-target]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = document.querySelector(button.dataset.scrollTarget);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      ticketForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const payload = {
+          title: document.getElementById('title').value,
+          description: document.getElementById('description').value,
+          status: document.getElementById('status').value,
+          priority: document.getElementById('priority').value,
+          assignee: document.getElementById('assignee').value || null,
+          customerName: document.getElementById('customerName').value || null,
+          category: document.getElementById('category').value || null
+        };
+
+        const response = await fetch('/api/tickets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorPayload = await response.json();
+          alert(errorPayload.error || 'Unable to create ticket');
+          return;
+        }
+
+        ticketForm.reset();
+        document.getElementById('priority').value = 'medium';
+        loadTickets();
+      });
+
+      filterStatus.addEventListener('change', loadTickets);
+      filterPriority.addEventListener('change', loadTickets);
+      refreshBtn.addEventListener('click', loadTickets);
+
+      ticketList.addEventListener('click', async (event) => {
+        const deleteButton = event.target.closest('[data-delete-id]');
+        const statusButton = event.target.closest('[data-status-action]');
+
+        if (deleteButton) {
+          const id = deleteButton.dataset.deleteId;
+          await fetch(`/api/tickets/${id}`, { method: 'DELETE' });
+          loadTickets();
+          return;
+        }
+
+        if (statusButton) {
+          const id = statusButton.dataset.statusAction;
+          const status = statusButton.dataset.status;
+          await fetch(`/api/tickets/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+          });
+          loadTickets();
+        }
+      });
+
+      loadTickets();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Ruyi Holdings</title>
+    <style>
+      :root {
+        --ruyi-green: #1e5d3b;
+        --ruyi-green-deep: #143e29;
+        --ruyi-gold: #d7b76c;
+        --ruyi-gold-soft: #f6ebbe;
+        --ruyi-ink: #1f2a37;
+        --ruyi-muted: #5f6f7c;
+        --ruyi-line: #e5decf;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(180deg, #f7f6f2 0%, #f2efe9 100%);
+        color: var(--ruyi-ink);
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(1180px, calc(100% - 30px)); margin: 0 auto; }
+      .topbar { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.95); border-bottom: 1px solid rgba(20,62,41,0.08); }
+      .topbar-inner { display: flex; align-items: center; justify-content: space-between; min-height: 82px; gap: 18px; }
+      .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--ruyi-green-deep); }
+      .brand-logo { width: 42px; height: 42px; object-fit: contain; }
+      .nav { display: flex; gap: 22px; color: var(--ruyi-muted); font-size: 0.96rem; }
+      .nav a:hover { color: var(--ruyi-green); }
+      .nav-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: 12px 18px; font-weight: 700; }
+      .btn-primary { background: linear-gradient(135deg, var(--ruyi-green) 0%, #2b6b47 100%); color: #fff; }
+      .btn-outline { background: rgba(30, 93, 59, 0.08); color: var(--ruyi-green-deep); }
+      .page-hero { background: linear-gradient(180deg, #f5efe5 0%, #f8f7f3 100%); padding: 70px 0 44px; }
+      .page-hero h1 { margin: 0 0 10px; font-size: clamp(2.2rem, 4vw, 3.4rem); color: var(--ruyi-green-deep); letter-spacing: -0.04em; }
+      .page-hero p { margin: 0; max-width: 800px; color: var(--ruyi-muted); line-height: 1.8; }
+      .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; padding: 50px 0 70px; }
+      .card { background: rgba(255,255,255,0.9); border: 1px solid var(--ruyi-line); border-radius: 22px; padding: 24px 22px; box-shadow: 0 12px 24px rgba(18,45,33,0.04); }
+      .card .icon { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: linear-gradient(135deg, var(--ruyi-gold-soft), #fff2cf); font-size: 1.5rem; margin-bottom: 16px; }
+      .card h3 { margin: 0 0 10px; color: var(--ruyi-green-deep); }
+      .card p { margin: 0; color: var(--ruyi-muted); line-height: 1.8; }
+      @media (max-width: 900px) { .nav { display: none; } .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <img class="brand-logo" src="http://ruyiholdings.com/wp-content/themes/ruyi/images/ruyi-logo.png" alt="Ruyi Holdings logo" />
+          <span>RUYI HOLDINGS</span>
+        </div>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/index.html">Home</a>
+          <a href="/about.html">About</a>
+          <a href="/products.html">Products</a>
+          <a href="/support.html">Support</a>
+          <a href="/contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-outline" href="mailto:support@ruyiholdings.com">Email Support</a>
+          <a class="btn btn-primary" href="https://wa.me/?text=Hello%20Ruyi%20Holdings%20Support%2C%20I%20need%20help." target="_blank" rel="noreferrer">WhatsApp</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <h1>Contact our team</h1>
+          <p>We are here to help with support questions, product inquiries, and partnership opportunities.</p>
+        </div>
+      </section>
+
+      <section class="container grid">
+        <article class="card">
+          <div class="icon">✆</div>
+          <h3>WhatsApp support</h3>
+          <p><a href="https://wa.me/?text=Hello%20Ruyi%20Holdings%20Support%2C%20I%20need%20help." target="_blank" rel="noreferrer">Chat with support</a><br />Fast customer assistance for product and order needs.</p>
+        </article>
+        <article class="card">
+          <div class="icon">✉</div>
+          <h3>Email support</h3>
+          <p><a href="mailto:support@ruyiholdings.com">support@ruyiholdings.com</a><br />A direct line for questions, help, and support requests.</p>
+        </article>
+        <article class="card">
+          <div class="icon">◎</div>
+          <h3>Business inquiries</h3>
+          <p>For partnerships and distributor conversations,<br />our team is ready to assist.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

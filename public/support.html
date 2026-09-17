@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Workspace | Ruyi Holdings</title>
+    <style>
+      :root { --green: #1e5d3b; --deep: #143e29; --gold: #d7b76c; --ink: #20302a; --muted: #718079; --line: #e5e8e3; --canvas: #f4f6f2; --panel: #fff; --danger: #b42318; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--canvas); color: var(--ink); font: 14px/1.5 "Segoe UI", Arial, sans-serif; }
+      a { color: inherit; text-decoration: none; }
+      button, input, select, textarea { font: inherit; }
+      button, .button { cursor: pointer; }
+      .app { min-height: 100vh; display: grid; grid-template-columns: 232px 1fr; }
+      .sidebar { background: var(--deep); color: #dce9df; padding: 22px 16px; display: flex; flex-direction: column; gap: 30px; }
+      .brand { display: flex; align-items: center; gap: 10px; padding: 0 10px; color: #fff; font-weight: 800; letter-spacing: .06em; }
+      .brand-logo { width: 34px; height: 34px; object-fit: contain; background: #fff; border-radius: 50%; }
+      .workspace-label { margin: 0 10px 8px; color: #91ad9a; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+      .side-nav { display: grid; gap: 5px; }
+      .side-nav a { display: flex; justify-content: space-between; align-items: center; border-radius: 8px; padding: 10px; color: #cbdacf; }
+      .side-nav a:hover, .side-nav a.active { background: rgba(255,255,255,.12); color: #fff; }
+      .count { min-width: 24px; border-radius: 12px; padding: 1px 7px; background: rgba(215,183,108,.2); color: #f6df9e; text-align: center; font-size: 12px; }
+      .sidebar-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,.12); padding: 16px 10px 0; color: #9fb1a5; font-size: 12px; }
+      .sidebar-footer a { display: block; margin-top: 8px; color: #f6df9e; }
+      .main { min-width: 0; }
+      .topbar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); background: #fff; padding: 14px 32px; }
+      .topbar h1 { margin: 0; color: var(--deep); font-size: 21px; }
+      .topbar p { margin: 2px 0 0; color: var(--muted); }
+      .top-actions { display: flex; align-items: center; gap: 10px; }
+      .button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; border: 1px solid transparent; border-radius: 7px; padding: 0 14px; font-weight: 700; }
+      .button-primary { background: var(--green); color: #fff; }
+      .button-secondary { border-color: var(--line); background: #fff; color: var(--deep); }
+      .avatar { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #e9dba9; color: var(--deep); font-weight: 800; }
+      .content { max-width: 1500px; margin: 0 auto; padding: 26px 32px 48px; }
+      .metrics { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-bottom: 22px; }
+      .metric { border: 1px solid var(--line); border-radius: 9px; background: #fff; padding: 17px 18px; }
+      .metric-label { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+      .metric-value { margin-top: 5px; color: var(--deep); font-size: 29px; font-weight: 800; }
+      .metric-note { color: var(--muted); font-size: 12px; }
+      .workspace { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(320px, .55fr); gap: 18px; align-items: start; }
+      .panel { min-width: 0; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); }
+      .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--line); padding: 17px 18px; }
+      .panel-head h2 { margin: 0; color: var(--deep); font-size: 16px; }
+      .panel-head p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+      .filters { display: flex; gap: 8px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+      .filters input { flex: 1; min-width: 160px; }
+      input, select, textarea { width: 100%; border: 1px solid #d8dfd9; border-radius: 6px; background: #fff; color: var(--ink); padding: 9px 10px; }
+      textarea { min-height: 100px; resize: vertical; }
+      .ticket-list { display: grid; }
+      .ticket-card { display: grid; grid-template-columns: 1fr auto; gap: 8px 18px; border-bottom: 1px solid var(--line); padding: 17px 18px; }
+      .ticket-card:last-child { border-bottom: 0; }
+      .ticket-card:hover { background: #fbfcfa; }
+      .ticket-title { margin: 0; color: var(--deep); font-size: 15px; }
+      .ticket-id { color: var(--muted); font-weight: 400; }
+      .ticket-description { margin: 5px 0 8px; color: #5e6d65; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .ticket-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; color: var(--muted); font-size: 12px; }
+      .ticket-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+      .badge { display: inline-flex; border-radius: 5px; padding: 4px 8px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+      .open { background: #dff7e8; color: var(--green); } .in_progress { background: #fff1d3; color: #8e5d09; } .resolved { background: #e1f8ea; color: #1d7d4c; } .closed { background: #edf1f4; color: #3f4b5d; }
+      .low { background: #eaf7d9; color: #2f681d; } .medium { background: #fff1d3; color: #8e5d09; } .high { background: #ffe1d9; color: #a33a25; }
+      .ticket-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 7px; margin-top: 3px; }
+      .ticket-actions .button { min-height: 30px; padding: 0 10px; font-size: 12px; }
+      .danger { background: #fff1f0; color: var(--danger); }
+      .empty { padding: 30px 18px; color: var(--muted); text-align: center; }
+      .form-panel { position: sticky; top: 20px; }
+      .ticket-form { display: grid; gap: 13px; padding: 18px; }
+      .ticket-form label { display: grid; gap: 6px; color: var(--deep); font-size: 12px; font-weight: 800; }
+      .form-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+      .help-box { margin: 0 18px 18px; border-radius: 7px; background: #f7f1dc; padding: 12px; color: #66572f; font-size: 12px; }
+      @media (max-width: 1050px) { .app { grid-template-columns: 72px 1fr; } .sidebar { padding: 22px 10px; } .brand span, .workspace-label, .side-nav a span:not(.count), .sidebar-footer { display: none; } .brand { justify-content: center; padding: 0; } .side-nav a { justify-content: center; } .side-nav .count { display: none; } }
+      @media (max-width: 780px) { .app { display: block; } .sidebar { display: block; padding: 12px 16px; } .brand { justify-content: flex-start; } .brand span { display: inline; } .side-nav { display: flex; overflow-x: auto; margin-top: 12px; } .side-nav a { white-space: nowrap; } .sidebar-footer { display: none; } .topbar, .content { padding-left: 18px; padding-right: 18px; } .topbar p, .top-actions .button-secondary { display: none; } .metrics { grid-template-columns: repeat(2, minmax(0,1fr)); } .workspace { grid-template-columns: 1fr; } .form-panel { position: static; } }
+      @media (max-width: 480px) { .metrics { gap: 8px; } .metric { padding: 12px; } .metric-value { font-size: 23px; } .filters { flex-wrap: wrap; } .ticket-card { grid-template-columns: 1fr; } .ticket-side { align-items: flex-start; flex-direction: row; } }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <a class="brand" href="/index.html"><img class="brand-logo" src="http://ruyiholdings.com/wp-content/themes/ruyi/images/ruyi-logo.png" alt="Ruyi Holdings logo" /><span>RUYI HOLDINGS</span></a>
+        <div>
+          <p class="workspace-label">Workspace</p>
+          <nav class="side-nav" aria-label="Support workspace navigation">
+            <a class="active" href="/support.html"><span>All tickets</span><span id="navAll" class="count">0</span></a>
+            <a href="#ticketList" data-quick-filter="open"><span>Open</span><span id="navOpen" class="count">0</span></a>
+            <a href="#ticketList" data-quick-filter="in_progress"><span>In progress</span><span id="navProgress" class="count">0</span></a>
+            <a href="#ticketList" data-quick-filter="high"><span>High priority</span><span id="navHigh" class="count">0</span></a>
+            <a href="#ticketList" data-quick-filter="resolved"><span>Resolved</span></a>
+          </nav>
+        </div>
+        <div class="sidebar-footer">Agent workspace<a href="mailto:support@ruyiholdings.com">support@ruyiholdings.com</a></div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div><h1>Support workspace</h1><p>Keep every customer request moving toward resolution.</p></div>
+          <div class="top-actions"><a class="button button-secondary" href="/index.html">View website</a><a class="button button-primary" href="https://wa.me/?text=Hello%20Ruyi%20Holdings%20Support%2C%20I%20need%20help." target="_blank" rel="noreferrer">WhatsApp</a><span class="avatar" title="Support agent">RU</span></div>
+        </header>
+
+        <div class="content">
+          <section class="metrics" aria-label="Ticket summary">
+            <article class="metric"><div class="metric-label">Total tickets</div><div id="metricTotal" class="metric-value">0</div><div class="metric-note">All customer requests</div></article>
+            <article class="metric"><div class="metric-label">Open</div><div id="metricOpen" class="metric-value">0</div><div class="metric-note">Waiting for action</div></article>
+            <article class="metric"><div class="metric-label">In progress</div><div id="metricProgress" class="metric-value">0</div><div class="metric-note">Currently being handled</div></article>
+            <article class="metric"><div class="metric-label">High priority</div><div id="metricHigh" class="metric-value">0</div><div class="metric-note">Needs close attention</div></article>
+          </section>
+
+          <div class="workspace">
+            <section class="panel" aria-live="polite">
+              <div class="panel-head"><div><h2>Ticket queue</h2><p>Review, assign, and update support cases.</p></div><button id="refreshBtn" class="button button-secondary" type="button">Refresh</button></div>
+              <div class="filters"><input id="searchInput" type="search" placeholder="Search tickets, customers, or PIC..." aria-label="Search tickets" /><select id="filterStatus" aria-label="Filter by status"><option value="">All statuses</option><option value="open">Open</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select><select id="filterPriority" aria-label="Filter by priority"><option value="">All priorities</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></div>
+              <div id="ticketList" class="ticket-list"></div>
+            </section>
+
+            <aside class="panel form-panel">
+              <div class="panel-head"><div><h2>New ticket</h2><p>Create and route a customer case.</p></div></div>
+              <form id="ticketForm" class="ticket-form">
+                <label>Subject<input id="title" name="title" required maxlength="160" placeholder="Product support request" /></label>
+                <label>Description<textarea id="description" name="description" required placeholder="Describe the customer issue..."></textarea></label>
+                <div class="form-row"><label>Priority<select id="priority" name="priority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></label><label>Status<select id="status" name="status"><option value="open">Open</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select></label></div>
+                <label>Customer<input id="customerName" name="customerName" placeholder="Customer or account name" /></label>
+                <label>Category<input id="category" name="category" placeholder="Product support" /></label>
+                <label>Assign to PIC<input id="assignee" name="assignee" placeholder="Sarah Lee or support lead" /></label>
+                <button class="button button-primary" type="submit">Create ticket</button>
+              </form>
+              <div class="help-box">After assignment, use <strong>Notify PIC</strong> on the ticket to open a prefilled WhatsApp message.</div>
+            </aside>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const ticketList = document.getElementById('ticketList');
+      const ticketForm = document.getElementById('ticketForm');
+      const filterStatus = document.getElementById('filterStatus');
+      const filterPriority = document.getElementById('filterPriority');
+      const searchInput = document.getElementById('searchInput');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const titleInput = document.getElementById('title');
+      const descriptionInput = document.getElementById('description');
+      const priorityInput = document.getElementById('priority');
+      const statusInput = document.getElementById('status');
+      const assigneeInput = document.getElementById('assignee');
+      const customerNameInput = document.getElementById('customerName');
+      const categoryInput = document.getElementById('category');
+      const whatsappNumber = '60123456789';
+      let allTickets = [];
+
+      function escapeHtml(value) { return String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]); }
+      function buildTicketWhatsAppLink(ticket) { const message = ['Hello, new support case assigned.', `Ticket ID: #${ticket.id}`, `Customer: ${ticket.customerName || 'Unassigned'}`, `Category: ${ticket.category || 'General'}`, `Title: ${ticket.title || 'Support request'}`, `Priority: ${ticket.priority || 'medium'}`, `Assignee: ${ticket.assignee || 'Unassigned'}`, `Description: ${ticket.description || 'No description provided.'}`].join('\n'); return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`; }
+      function formatDate(value) { return value ? new Date(value).toLocaleString() : 'n/a'; }
+      function updateMetrics() { const count = (predicate) => allTickets.filter(predicate).length; document.getElementById('metricTotal').textContent = allTickets.length; document.getElementById('metricOpen').textContent = count((ticket) => ticket.status === 'open'); document.getElementById('metricProgress').textContent = count((ticket) => ticket.status === 'in_progress'); document.getElementById('metricHigh').textContent = count((ticket) => ticket.priority === 'high'); document.getElementById('navAll').textContent = allTickets.length; document.getElementById('navOpen').textContent = count((ticket) => ticket.status === 'open'); document.getElementById('navProgress').textContent = count((ticket) => ticket.status === 'in_progress'); document.getElementById('navHigh').textContent = count((ticket) => ticket.priority === 'high'); }
+      function renderTickets() {
+        const search = searchInput.value.trim().toLowerCase();
+        const tickets = allTickets.filter((ticket) => (!filterStatus.value || ticket.status === filterStatus.value) && (!filterPriority.value || ticket.priority === filterPriority.value) && (!search || [ticket.title, ticket.description, ticket.customerName, ticket.assignee, ticket.category].some((value) => String(value || '').toLowerCase().includes(search))));
+        ticketList.innerHTML = '';
+        if (!tickets.length) { ticketList.innerHTML = '<div class="empty">No tickets match the current filters.</div>'; return; }
+        tickets.forEach((ticket) => {
+          const card = document.createElement('article'); card.className = 'ticket-card';
+          card.innerHTML = `<div><h3 class="ticket-title"><span class="ticket-id">#${ticket.id}</span> ${escapeHtml(ticket.title)}</h3><p class="ticket-description">${escapeHtml(ticket.description || 'No description provided.')}</p><div class="ticket-meta"><span>${escapeHtml(ticket.customerName || 'No customer')}</span><span>${escapeHtml(ticket.category || 'General')}</span><span>PIC: ${escapeHtml(ticket.assignee || 'Unassigned')}</span><span>${formatDate(ticket.updatedAt)}</span></div></div><div class="ticket-side"><span class="badge ${escapeHtml(ticket.status || 'open')}">${escapeHtml((ticket.status || 'open').replace('_', ' '))}</span><span class="badge ${escapeHtml(ticket.priority || 'medium')}">${escapeHtml(ticket.priority || 'medium')}</span></div><div class="ticket-actions"><a class="button button-secondary" href="${buildTicketWhatsAppLink(ticket)}" target="_blank" rel="noreferrer">Notify PIC</a><button class="button button-secondary" data-status-action="${ticket.id}" data-status="in_progress" type="button">Start</button><button class="button button-secondary" data-status-action="${ticket.id}" data-status="resolved" type="button">Resolve</button><button class="button button-secondary" data-status-action="${ticket.id}" data-status="closed" type="button">Close</button><button class="button danger" data-delete-id="${ticket.id}" type="button">Delete</button></div>`;
+          ticketList.appendChild(card);
+        });
+      }
+      async function loadTickets() { const response = await fetch('/api/tickets'); const payload = await response.json(); allTickets = payload.tickets || []; updateMetrics(); renderTickets(); }
+      ticketForm.addEventListener('submit', async (event) => { event.preventDefault(); const payload = { title: titleInput.value, description: descriptionInput.value, status: statusInput.value, priority: priorityInput.value, assignee: assigneeInput.value || null, customerName: customerNameInput.value || null, category: categoryInput.value || null }; const response = await fetch('/api/tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) { const errorPayload = await response.json(); alert(errorPayload.error || 'Unable to create ticket'); return; } ticketForm.reset(); priorityInput.value = 'medium'; await loadTickets(); });
+      [filterStatus, filterPriority].forEach((control) => control.addEventListener('change', renderTickets)); searchInput.addEventListener('input', renderTickets); refreshBtn.addEventListener('click', loadTickets);
+      document.querySelectorAll('[data-quick-filter]').forEach((link) => link.addEventListener('click', () => { const value = link.dataset.quickFilter; if (['open', 'in_progress', 'resolved'].includes(value)) { filterStatus.value = value; filterPriority.value = ''; } else { filterPriority.value = value; filterStatus.value = ''; } renderTickets(); }));
+      ticketList.addEventListener('click', async (event) => { const deleteButton = event.target.closest('[data-delete-id]'); const statusButton = event.target.closest('[data-status-action]'); if (deleteButton) { await fetch(`/api/tickets/${deleteButton.dataset.deleteId}`, { method: 'DELETE' }); await loadTickets(); return; } if (statusButton) { await fetch(`/api/tickets/${statusButton.dataset.statusAction}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: statusButton.dataset.status }) }); await loadTickets(); } });
+      loadTickets();
+    </script>
+  </body>
+</html>
